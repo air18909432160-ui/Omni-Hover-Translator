@@ -1,0 +1,14 @@
+node_modules/
+test-results/
+playwright-report/
+release-assets/
+github-upload/
+Omni-Hover-Translator-*/
+*.zip
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.DS_Store
+Thumbs.db

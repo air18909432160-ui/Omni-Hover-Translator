@@ -1,0 +1,8 @@
+﻿<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>Omni 翻译工具</title><link rel="stylesheet" href="popup.css"></head><body>
+<header><div><strong>OMNI</strong><small>随手翻译，自在阅读</small></div><button id="options">完整设置 ↗</button></header>
+<label class="toggle"><span>悬停 / 划词翻译</span><input type="checkbox" id="enabled"></label>
+<div class="languages"><select id="sourceLang" aria-label="源语言"></select><button id="swap" title="交换语言" aria-label="交换语言">⇄</button><select id="targetLang" aria-label="目标语言"></select></div>
+<form id="quick-form"><textarea id="text" rows="4" maxlength="2500" placeholder="粘贴文字，立即翻译…" aria-label="待翻译文字" required></textarea><div class="row"><span id="provider-label"></span><button class="primary" id="translate">翻译</button></div></form>
+<p id="result" dir="auto" role="status" aria-live="polite">译文会显示在这里。</p><div class="row"><button id="copy" disabled>复制译文</button><button id="reader">PDF 阅读器</button><button id="history-toggle" aria-expanded="false">本地历史</button></div>
+<p id="status" role="status"></p><section id="history" hidden><div class="row"><strong>最近翻译</strong><button id="clear-history">清空</button></div><div id="history-items"></div></section>
+<script src="shared/settings.js"></script><script type="module" src="popup.js"></script></body></html>

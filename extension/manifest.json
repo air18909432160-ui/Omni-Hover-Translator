@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Omni-Hover-Translator",
+  "version": "1.3.1",
+  "description": "网页与 PDF 共用的英文悬停翻译、高亮与朗读。",
+  "minimum_chrome_version": "150",
+  "permissions": ["storage", "declarativeNetRequest", "contextMenus"],
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "background": {"service_worker": "background.js", "type": "module"},
+  "action": {"default_title": "Omni 翻译工具", "default_popup": "popup.html"},
+  "commands": {"toggle-translator": {"suggested_key": {"default": "Alt+Shift+T"}, "description": "启用或暂停悬停翻译"}},
+  "options_page": "options.html",
+  "content_scripts": [{
+    "matches": ["http://*/*", "https://*/*"],
+    "js": ["shared/settings.js", "shared/text-utils.js", "shared/TranslatorCore.js", "web-injector.js"],
+    "run_at": "document_idle",
+    "all_frames": true
+  }],
+  "web_accessible_resources": [{
+    "resources": ["pdf-viewer.html"],
+    "matches": ["http://*/*", "https://*/*"]
+  }],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; worker-src 'self'; connect-src 'self' http: https:;"
+  }
+}

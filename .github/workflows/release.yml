@@ -1,0 +1,43 @@
+name: Publish Edge release
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Match tag with manifest and package version
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const manifest = JSON.parse(fs.readFileSync('extension/manifest.json', 'utf8'));
+          const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+          if (process.env.GITHUB_REF_NAME !== `v${manifest.version}` || pkg.version !== manifest.version) {
+            throw new Error('Tag, manifest and package versions must match');
+          }
+          NODE
+      - run: npm ci
+      - run: npm test
+      - run: npx playwright install --with-deps chromium
+      - run: npm run build
+      - run: npm run test:browser
+      - run: npm run package
+      - name: Create release and attach installation package
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          NOTES="docs/RELEASE_${GITHUB_REF_NAME}.md"
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" release-assets/* --clobber
+          elif [ -f "$NOTES" ]; then
+            gh release create "$GITHUB_REF_NAME" release-assets/* --verify-tag --title "Omni Hover Translator ${GITHUB_REF_NAME}" --notes-file "$NOTES"
+          else
+            gh release create "$GITHUB_REF_NAME" release-assets/* --verify-tag --title "Omni Hover Translator ${GITHUB_REF_NAME}" --generate-notes
+          fi

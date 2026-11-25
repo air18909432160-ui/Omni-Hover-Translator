@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-CN" data-reading-theme="comfort">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Omni PDF 阅读器</title><link rel="stylesheet" href="vendor/pdf_viewer.css"><link rel="stylesheet" href="pdf-viewer.css"></head>
+<body>
+  <header class="toolbar">
+    <div class="brand" aria-label="Omni PDF Reader"><span class="brand-mark">O</span><div><strong>OMNI</strong><small>PDF READER</small></div></div>
+    <button id="toggle-outline" aria-label="切换目录" aria-expanded="true">☰ 目录</button>
+    <label class="file-button">打开文件<input id="file" type="file" accept="application/pdf,.pdf"></label>
+    <form id="url-form"><input id="url" type="url" placeholder="输入 PDF 的 HTTP(S) 地址" aria-label="PDF 地址"><button>打开链接</button></form>
+    <div class="paging"><button id="previous" aria-label="上一页">‹</button><input id="page-number" type="number" min="1" value="1" aria-label="跳转页码"><span id="page-count">/ 0</span><button id="next" aria-label="下一页">›</button></div>
+    <div class="zoom-controls"><button id="zoom-out" aria-label="缩小">−</button><output id="zoom">100%</output><button id="zoom-in" aria-label="放大">＋</button></div>
+    <select id="reading-theme" aria-label="阅读配色"><option value="comfort">护眼暖纸</option><option value="night">深色夜读</option><option value="original">文档原色</option></select>
+    <button id="settings">设置</button>
+  </header>
+  <div class="workspace">
+    <aside id="outline"><span class="eyebrow">CONTENTS</span><h2>文档目录</h2><nav id="outline-items" aria-label="PDF 目录">打开 PDF 后显示目录。</nav></aside>
+    <main id="viewport" tabindex="0" aria-label="PDF 连续阅读区"><div id="pages"></div><div id="empty"><div class="empty-card"><span class="empty-symbol">O</span><span class="eyebrow">A QUIETER WAY TO READ</span><h1>让阅读，慢下来。</h1><p id="empty-message">打开本地 PDF 或粘贴文档链接。<br>悬停或选择文字，译文轻轻浮现。<br>语言与触发方式可在设置中调整。</p><span class="empty-hint">暖纸配色 · 跨行翻译 · 沉浸阅读</span></div></div></main>
+  </div>
+  <footer><span class="status-dot" aria-hidden="true"></span><span id="status" role="status" aria-live="polite">就绪</span><span class="footer-hint"><kbd>Esc</kbd> 收起翻译 · 悬停 200ms</span></footer>
+  <script src="shared/settings.js" defer></script><script src="shared/text-utils.js" defer></script><script src="shared/TranslatorCore.js" defer></script><script type="module" src="pdf-viewer.js"></script>
+</body>
+</html>

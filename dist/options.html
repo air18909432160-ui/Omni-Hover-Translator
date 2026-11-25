@@ -1,0 +1,38 @@
+﻿<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Omni · 翻译偏好设置</title><link rel="stylesheet" href="options.css"></head>
+<body><div class="layout">
+<aside class="sidebar"><div class="brand"><span>O</span><div><strong>OMNI</strong><small>TRANSLATOR</small></div></div><p class="eyebrow">你的阅读，由你定义</p><nav><a href="#general">01　语言与服务</a><a href="#interaction">02　触发与行为</a><a href="#appearance">03　气泡与高亮</a><a href="#reading">04　阅读与朗读</a><a href="#privacy">05　隐私与数据</a></nav><button id="reader" type="button">打开 PDF 阅读器 ↗</button><p class="sidebar-note">Alt + Shift + T<br>启用或暂停悬停翻译<br><small>快捷键可在浏览器扩展快捷键页面修改</small></p></aside>
+<main><div id="runtime-status" role="status" hidden>未在扩展中运行。请从扩展图标打开设置，或在扩展管理页打开选项。</div><header class="page-header"><span class="eyebrow">PREFERENCES / 1.3.1</span><h1>舒服地读，自在地译。</h1><p>语言、停留时间、气泡外观，都按你的习惯来。修改会自动保存，网页与 PDF 共用一套偏好。</p></header>
+<form id="settings">
+<section id="general"><div class="section-title"><span>01</span><div><h2>语言与翻译服务</h2><p>选择文字的来处和去处。</p></div></div>
+<div class="grid"><label>源语言<select id="sourceLang"></select></label><label>目标语言<select id="targetLang"></select></label></div>
+<button type="button" id="swap">⇄ 交换语言</button>
+<label>翻译服务<select id="provider"><option value="deepl-free">DeepL API Free</option><option value="deepl-pro">DeepL API Pro</option><option value="libre">LibreTranslate · 自建 / 自定义服务</option></select></label>
+<div id="deepl-fields"><label>DeepL API Key<input id="key" type="password" autocomplete="off" spellcheck="false" placeholder="填写 DeepL API Key"></label><p class="note">Free 和 Pro 共用此输入框，切换套餐时请填写对应 Key。</p></div>
+<div id="libre-fields" hidden><label>服务地址<input id="libreUrl" type="url" placeholder="https://translate.example.com/translate" spellcheck="false"></label><label>LibreTranslate API Key（服务允许时可留空）<input id="libreKey" type="password" autocomplete="off"></label><p class="note">使用可信的 LibreTranslate 服务。支持 HTTPS，本机 localhost / 127.0.0.1 可用 HTTP；实际语言支持由服务端决定。</p></div>
+<button type="button" id="test">保存并测试连接</button><p id="connection-status" role="status"></p>
+</section>
+<section id="interaction"><div class="section-title"><span>02</span><div><h2>触发与行为</h2><p>让翻译在需要时出现。</p></div></div>
+<div class="toggles"><label class="switch"><span>启用翻译<small>总开关，也可通过工具栏快捷面板暂停。</small></span><input id="enabled" type="checkbox"></label><label class="switch"><span>普通网页悬停翻译</span><input id="webEnabled" type="checkbox"></label><label class="switch"><span>PDF 悬停翻译</span><input id="pdfEnabled" type="checkbox"></label><label class="switch"><span>选择文字后翻译<small>选中文字后立即显示并固定气泡，适合长句或手动取词。</small></span><input id="selectionTranslation" type="checkbox"></label></div>
+<div class="grid"><label>悬停等待（秒）<input id="hoverSeconds" type="number" min="0.1" max="5" step="0.1"></label><label>离开后收起（秒）<input id="dismissSeconds" type="number" min="0.1" max="3" step="0.05"></label><label>触发方式<select id="modifier"><option value="none">直接悬停</option><option value="alt">按住 Alt 再悬停</option><option value="ctrl">按住 Ctrl 再悬停</option><option value="shift">按住 Shift 再悬停</option></select></label><label>捕获范围<select id="captureMode"><option value="sentence">当前句子（支持跨行）</option><option value="paragraph">当前段落</option></select></label></div>
+<label>排除网站<textarea id="excludedHosts" rows="3" placeholder="example.com&#10;mail.example.org"></textarea></label><p class="note">每行一个域名，自动包含其子域名；不填写路径。排除网站同时停用悬停与划词翻译。</p>
+</section>
+<section id="appearance"><div class="section-title"><span>03</span><div><h2>气泡与高亮</h2><p>降低打扰，保留清晰。</p></div></div>
+<label>气泡大小<select id="bubbleSize"><option value="small">小 · 紧凑（332px / 14px 字号）</option><option value="medium">中 · 标准（412px / 16px 字号）</option><option value="large">大 · 舒展（552px / 20px 字号）</option></select></label><p class="note">选择档位会同时调整宽度、字号和内边距；也可用下方滑块微调宽度和字号。气泡右上角也能直接切换。</p>
+<div class="grid"><label>气泡主题<select id="bubbleTheme"><option value="forest">森林灰绿</option><option value="night">深灰夜色</option><option value="paper">暖纸浅色</option></select></label><label>译文字号 <output id="fontSize-value"></output><input id="fontSize" type="range" min="12" max="26" step="1"></label><label>气泡背景不透明度 <output id="bubbleOpacity-value"></output><input id="bubbleOpacity" type="range" min="35" max="100"></label><label>气泡宽度 <output id="bubbleWidth-value"></output><input id="bubbleWidth" type="range" min="300" max="640" step="4"></label></div>
+<div class="toggles"><label class="switch"><span>显示原文</span><input id="showOriginal" type="checkbox"></label><label class="switch"><span>高亮当前文字</span><input id="highlightEnabled" type="checkbox"></label></div>
+<div class="grid"><label>高亮颜色<input id="highlightColor" type="color"></label><label>高亮不透明度 <output id="highlightOpacity-value"></output><input id="highlightOpacity" type="range" min="5" max="70"></label></div>
+<div class="preview-stage"><div id="preview"><small>悬停翻译　EN → 中文</small><p id="preview-source">A quieter way to read and understand.</p><div id="preview-target">读得从容，也理解得更深。</div><span>复制译文　·　朗读　·　固定气泡</span></div></div><p class="note">这是外观预览；降低背景不透明度不会让文字本身变淡。</p>
+</section>
+<section id="reading"><div class="section-title"><span>04</span><div><h2>阅读与朗读</h2><p>适合长时间阅读的小细节。</p></div></div>
+<div class="grid"><label>PDF 页面配色<select id="readingTheme"><option value="comfort">护眼暖纸</option><option value="night">深色夜读</option><option value="original">文档原色</option></select></label><label>朗读速度 <output id="ttsRate-value"></output><input id="ttsRate" type="range" min="0.5" max="2" step="0.1"></label></div>
+<div class="toggles"><label class="switch"><span>键盘逐句阅读<small>在网页和 PDF 中用快捷键前进或后退；输入框内不会触发。</small></span><input id="keyboardReading" type="checkbox"></label></div>
+<p class="note">快捷键：Alt + J 下一句，Alt + K 上一句。</p>
+<div class="toggles"><label class="switch"><span>翻译完成后自动朗读译文<small>首次使用可能需要先点击页面；声音由系统提供。</small></span><input id="autoSpeak" type="checkbox"></label><label class="switch"><span>自动用内置阅读器打开 .pdf 链接</span><input id="redirect" type="checkbox"></label></div><p class="note">暖纸 / 夜读会改变图片和图表颜色，核对颜色时请用文档原色。</p>
+</section>
+<section id="privacy"><div class="section-title"><span>05</span><div><h2>隐私与数据</h2><p>记录与保留，由你选择。</p></div></div>
+<div class="toggles"><label class="switch"><span>缓存相同文字的译文<small>只保存在后台内存，设置变化或浏览器重启后清空。</small></span><input id="cacheEnabled" type="checkbox"></label><label class="switch"><span>保存本地翻译历史<small>默认关闭。开启后最多保留 100 条原文与译文，不记录网页地址。</small></span><input id="historyEnabled" type="checkbox"></label></div>
+<div class="actions"><button id="clear-cache" type="button">清空缓存</button><button id="clear-history" type="button">删除全部历史</button><button id="reset" type="button">恢复偏好默认值</button></div><p class="note">Key 仅保存在本机扩展存储，未加密；不会包含在页面或历史记录中。当前文字会发送到所选服务。恢复偏好保留服务地址、Key 和历史记录。</p>
+</section>
+<div class="save-bar"><span id="status" role="status" aria-live="polite">修改后自动保存；下方状态会确认是否写入成功。</span><button type="submit" class="primary">保存设置</button></div>
+</form></main></div><script src="shared/settings.js"></script><script src="options-guard.js"></script><script type="module" src="options.js"></script></body></html>
